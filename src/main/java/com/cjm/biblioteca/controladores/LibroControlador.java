@@ -6,6 +6,7 @@ import com.cjm.biblioteca.servicios.EditorialServicio;
 import com.cjm.biblioteca.servicios.LibroServicio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,11 +34,13 @@ public class LibroControlador {
     @PostMapping("/registro")
     public String registro(@RequestParam(required = false) Long isbn, @RequestParam String titulo,
                            @RequestParam(required = false) Integer ejemplares,
-                           @RequestParam String idAutor, @RequestParam String idEditorial){
+                           @RequestParam String idAutor, @RequestParam String idEditorial, ModelMap modelo){
         try {
             libroServicio.crearLibro(isbn, titulo, ejemplares, idAutor,idEditorial );
+
+            modelo.put("éxito","El libro fue cargado correctamente");
         } catch (BibliotecaException e) {
-            Logger.getLogger(AutorControlador.class.getName()).log(Level.SEVERE, null, e);
+            modelo.put("error",e.getMessage());
             return "libro_form.html";
         }
         return "index.html";
