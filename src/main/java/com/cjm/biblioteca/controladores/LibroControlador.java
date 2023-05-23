@@ -1,5 +1,7 @@
 package com.cjm.biblioteca.controladores;
 
+import com.cjm.biblioteca.entidades.Autor;
+import com.cjm.biblioteca.entidades.Editorial;
 import com.cjm.biblioteca.excepciones.BibliotecaException;
 import com.cjm.biblioteca.servicios.AutorServicio;
 import com.cjm.biblioteca.servicios.EditorialServicio;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -27,7 +30,12 @@ public class LibroControlador {
     private EditorialServicio editorialServicio;
 
     @GetMapping("/registrar")
-    public String registrar(){
+    public String registrar(ModelMap modelo){
+        List<Autor> autores = autorServicio.listarAutores();
+        List<Editorial> editoriales = editorialServicio.listarEditoriales();
+
+        modelo.addAttribute("autores", autores);
+        modelo.addAttribute("editoriales", editoriales);
         return "libro_form.html";
     }
 
@@ -41,6 +49,11 @@ public class LibroControlador {
             modelo.put("éxito","El libro fue cargado correctamente");
         } catch (BibliotecaException e) {
             modelo.put("error",e.getMessage());
+            List<Autor> autores = autorServicio.listarAutores();
+            List<Editorial> editoriales = editorialServicio.listarEditoriales();
+
+            modelo.addAttribute("autores", autores);
+            modelo.addAttribute("editoriales", editoriales);
             return "libro_form.html";
         }
         return "index.html";

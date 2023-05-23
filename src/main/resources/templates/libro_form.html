@@ -17,19 +17,27 @@
   <form action="/libro/registro" method="post">
 
     <label>ISBN del Libro:</label>
-    <input type="text" name="isbn">
+    <input type="text" name="isbn"><br>
 
     <label>Título:</label>
-    <input type="text" name="titulo">
+    <input type="text" name="titulo"><br>
 
     <label>Cantidad de ejemplares disponnibles:</label>
-    <input type="text" name="ejemplares">
+    <input type="text" name="ejemplares"><br>
 
-    <label>ID Del Autor:</label>
-    <input type="text" name="idAutor">
+    <select name="idAutor">
+      <option>Seleccionar Autor</option>
+      <option th:each="autor:${autores}"
+              th:value="${autor.id}"
+              th:text="${autor.nombre}"></option>
+    </select><br>
 
-    <label>ID De la Editorial:</label>
-    <input type="text" name="idEditorial">
+    <select name="idEditorial">
+      <option>Seleccionar Editorial</option>
+      <option th:each="editorial:${editoriales}"
+              th:value="${editorial.id}"
+              th:text="${editorial.nombre}"></option>
+    </select><br>
 
     <div th:if = "${error != null}" class="card text-white bg-danger mb-3 mensajeError">
       <div class="card-body">
