@@ -1,6 +1,7 @@
 package com.cjm.biblioteca.servicios;
 
 import com.cjm.biblioteca.entidades.Editorial;
+import com.cjm.biblioteca.excepciones.BibliotecaException;
 import com.cjm.biblioteca.repositorios.EditorialRepositorio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,7 +18,10 @@ public class EditorialServicio {
     EditorialRepositorio editorialRepositorio;
 
     @Transactional
-    public void crearEditorial (String nombre){
+    public void crearEditorial (String nombre) throws BibliotecaException {
+
+        this.verificar(nombre);
+
         Editorial editorial = new Editorial();
 
         editorial.setNombre(nombre);
@@ -34,7 +38,9 @@ public class EditorialServicio {
         return editoriales;
     }
 
-    public void modificarEditorial( String idEditorial, String nombreEditorial){
+    public void modificarEditorial( String idEditorial, String nombreEditorial) throws BibliotecaException {
+
+        this.verificar(nombreEditorial);
 
         Optional<Editorial> editorialOptional = editorialRepositorio.findById(idEditorial);
 
@@ -46,6 +52,12 @@ public class EditorialServicio {
 
             editorialRepositorio.save(editorial);
 
+        }
+    }
+
+    private void verificar(String nombre) throws BibliotecaException {
+        if (nombre == null || nombre.isEmpty()){
+            throw new BibliotecaException("El nombre no puede ser nulo ni estar vacío");
         }
     }
 }

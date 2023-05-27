@@ -2,6 +2,7 @@ package com.cjm.biblioteca.controladores;
 
 import com.cjm.biblioteca.entidades.Autor;
 import com.cjm.biblioteca.entidades.Editorial;
+import com.cjm.biblioteca.entidades.Libro;
 import com.cjm.biblioteca.excepciones.BibliotecaException;
 import com.cjm.biblioteca.servicios.AutorServicio;
 import com.cjm.biblioteca.servicios.EditorialServicio;
@@ -57,6 +58,13 @@ public class LibroControlador {
             return "libro_form.html";
         }
         return "index.html";
+    }
+
+    @GetMapping("/lista")
+    public String listar (ModelMap modelo){
+        List<Libro> libros = libroServicio.listarLibros();
+        modelo.addAttribute("libros", libros);
+        return "libro_list.html";
     }
 
 }

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Lista de Editoriales</title>
+</head>
+<body>
+<h1>Lista de Editoriales</h1>
+
+<table>
+  <thead>
+  <tr >
+    <th>ID de la Editorial</th>
+    <th>Nombre</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="editorial : ${editoriales}">
+    <td th:text="${editorial.id}"></td>
+    <td th:text="${editorial.nombre}"></td>
+  </tr>
+  </tbody>
+
+</table>
+
+</body>
+</html>

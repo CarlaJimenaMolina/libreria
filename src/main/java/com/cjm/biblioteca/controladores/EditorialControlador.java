@@ -1,8 +1,8 @@
 package com.cjm.biblioteca.controladores;
 
-import com.cjm.biblioteca.entidades.Autor;
+import com.cjm.biblioteca.entidades.Editorial;
 import com.cjm.biblioteca.excepciones.BibliotecaException;
-import com.cjm.biblioteca.servicios.AutorServicio;
+import com.cjm.biblioteca.servicios.EditorialServicio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -12,37 +12,37 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 @Controller
-@RequestMapping("/autor")
-public class AutorControlador {
+@RequestMapping("/editorial")
+public class EditorialControlador {
 
     @Autowired
-    private AutorServicio autorServicio;
+    EditorialServicio editorialServicio;
 
     @GetMapping("/registrar")
     public String registrar(){
-        return "autor_form.html";
+        return "editorial_form";
     }
 
     @PostMapping("/registro")
-    public String registro(@RequestParam String nombre, ModelMap modelo){
+    public String registro(@RequestParam(required = false) String nombre, ModelMap modelo){
+
         try {
-            autorServicio.crearAutor(nombre);
-            modelo.put("exito", "El Autor fue cargado con éxito");
+            editorialServicio.crearEditorial(nombre);
+            modelo.put("exito","El libro fue cargado correctamente");
         } catch (BibliotecaException e) {
-            modelo.put("error",e.getMessage());
-            return "autor_form.html";
+            modelo.put("error", e.getMessage());
+            return "editorial_form";
         }
         return "index.html";
+
     }
 
     @GetMapping("/lista")
-    public String listar (ModelMap modelo){
-        List<Autor> autores = autorServicio.listarAutores();
-        modelo.addAttribute("autores", autores);
-        return "autor_list.html";
+    public String listar(ModelMap modelo){
+        List<Editorial> editoriales = editorialServicio.listarEditoriales();
+        modelo.addAttribute("editoriales", editoriales);
+        return "editorial_list.html";
     }
 }

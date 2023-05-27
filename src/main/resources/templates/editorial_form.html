@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Carga de autor</title>
+    <link rel="stylesheet" href="../static/style.css">
+</head>
+<body>
+<header>
+    <h1>Carga de Editoriales</h1>
+    <br>
+</header>
+
+<main>
+    <h2>Ingrese los datos de la editorial que desea cargar</h2>
+    <br>
+    <form action="/editorial/registro" method="post">
+        <label>Nombre de la Editorial:</label>
+        <input type="text" name="nombre">
+
+        <div th:if="${error != null}" class="card text-white bg-danger mb-3 mensajeError">
+            <div class="card-body">
+                <h5 class="card-title">Error</h5>
+                <p class="card-text" th:text="${error}"></p>
+            </div>
+        </div>
+        <div th:if="${error != null}" class="card text-white bg-danger mb-3 mensajeError">
+            <div class="card-body">
+                <h5 class="card-title">Error</h5>
+                <p class="card-text" th:text="${error}"></p>
+            </div>
+        </div>
+        <input type="submit" value="Subir">
+    </form>
+</main>
+</body>
+</html>
